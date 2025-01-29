@@ -55,7 +55,7 @@ export default function Hero() {
         </h1>
         <p
           ref={heroTextRef}
-          className="text-center text-base font-normal leading-[130%] px-6 overflow-hidden sm:w-[360px] z-10"
+          className="text-center text-base font-normal leading-[130%] px-6 overflow-hidden sm:w-[380px] z-10"
         >
           {description}
         </p>
