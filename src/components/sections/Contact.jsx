@@ -97,7 +97,7 @@ export default function Contact() {
   return (
     <div className={styles["pin-spacer"]}>
       <div
-        className="contact-container h-screen sticky top-0"
+        className="contact-container h-screen sticky top-0 -mb-0.5"
         ref={contactContainer}
       >
         <div
