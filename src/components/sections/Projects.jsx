@@ -38,6 +38,14 @@ export default function Projects() {
       link: "https://tenzies-roller.netlify.app/",
       languages: ["React.js", "SCSS"],
     },
+    {
+      id: "04",
+      type: "Landing Page",
+      title: "SoundSphere",
+      description: "Landing page of web player",
+      link: "https://soundsphere-player.netlify.app/",
+      languages: ["Next.js", "Tailwind CSS", "ShadCN"],
+    }
   ];
 
   return (
