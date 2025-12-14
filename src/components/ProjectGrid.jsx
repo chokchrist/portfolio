@@ -8,12 +8,6 @@ const projects = [
     category: "AI & Development",
     image: "/projects/CV_Generator.png",
   },
-  {
-    id: 2,
-    title: "E-Commerce",
-    category: "Full Stack",
-    image: "https://images.unsplash.com/photo-1523474253046-8cd2748b5fd2?q=80&w=1000&auto=format&fit=crop",
-  },
 ];
 
 const ProjectGrid = () => {
