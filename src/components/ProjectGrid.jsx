@@ -7,6 +7,7 @@ const projects = [
     title: "AI-Powered Resume Builder",
     category: "AI & Development",
     image: "/projects/CV_Generator.png",
+    link: "https://resumecraft-ai-yu36.onrender.com/", // Placeholder link
   },
 ];
 
@@ -22,18 +23,21 @@ const ProjectGrid = () => {
 
       <div className="max-w-7xl mx-auto px-4 md:px-12 mt-16">
         <h2 className="text-sm font-medium mb-12 uppercase tracking-wider" style={{ color: 'var(--color-secondary)' }}>
-          Selected Works (2023-2024)
+          Selected Works (2024-2025)
         </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {projects.map((project, index) => (
-            <motion.div
+            <motion.a
               key={project.id}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group cursor-pointer"
+              className="group cursor-pointer block"
               data-hover="View"
             >
               <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4 bg-gray-900">
@@ -49,7 +53,7 @@ const ProjectGrid = () => {
                 <h4 className="text-2xl font-medium transition-colors" style={{ color: 'var(--color-primary)' }}>{project.title}</h4>
                 <p className="text-sm mt-1" style={{ color: 'var(--color-secondary)' }}>{project.category}</p>
               </div>
-            </motion.div>
+            </motion.a>
           ))}
         </div>
       </div>
