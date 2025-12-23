@@ -1,3 +1,4 @@
+import React from 'react';
 import { motion } from 'framer-motion';
 import Marquee from './Marquee';
 
@@ -37,47 +38,59 @@ const ProjectGrid = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
           {projects.map((project, index) => (
-            <motion.a
-              key={project.id}
-              href={project.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="group cursor-pointer block"
-              data-hover="View"
-            >
-              <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4 bg-gray-900">
-                <motion.img
-                  src={project.image}
-                  alt={project.title}
-                  className="object-cover w-full h-full opacity-80 group-hover:opacity-100 transition-opacity duration-500"
-                  whileHover={{ scale: 1.05 }}
-                  transition={{ duration: 0.5 }}
-                />
-              </div>
-              <div>
-                <h4 className="text-2xl font-medium transition-colors" style={{ color: 'var(--color-primary)' }}>{project.title}</h4>
-                <p className="text-sm mt-1 mb-3" style={{ color: 'var(--color-secondary)' }}>{project.category}</p>
-                <div className="flex flex-wrap gap-2">
-                  {project.techStack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-2 py-0.5 rounded-full border text-xs opacity-80"
-                      style={{ borderColor: 'var(--color-secondary)', color: 'var(--color-secondary)' }}
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </motion.a>
+            <ProjectCard key={project.id} project={project} index={index} />
           ))}
         </div>
       </div>
     </section>
+  );
+};
+
+const ProjectCard = ({ project, index }) => {
+  const [isLoaded, setIsLoaded] = React.useState(false);
+
+  return (
+    <motion.a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      whileTap={{ scale: 0.95 }}
+      viewport={{ once: true }}
+      transition={{ delay: index * 0.1 }}
+      className="group cursor-pointer block"
+      data-hover="View"
+    >
+      <div className="relative aspect-[4/3] overflow-hidden rounded-lg mb-4 bg-gray-900">
+        {!isLoaded && (
+          <div className="absolute inset-0 bg-gray-800 animate-pulse" />
+        )}
+        <motion.img
+          src={project.image}
+          alt={project.title}
+          onLoad={() => setIsLoaded(true)}
+          className={`object-cover w-full h-full transition-opacity duration-500 ${isLoaded ? 'opacity-80 group-hover:opacity-100' : 'opacity-0'}`}
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.5 }}
+        />
+      </div>
+      <div>
+        <h4 className="text-2xl font-medium transition-colors" style={{ color: 'var(--color-primary)' }}>{project.title}</h4>
+        <p className="text-sm mt-1 mb-3" style={{ color: 'var(--color-secondary)' }}>{project.category}</p>
+        <div className="flex flex-wrap gap-2">
+          {project.techStack.map((tech) => (
+            <span
+              key={tech}
+              className="px-2 py-0.5 rounded-full border text-xs opacity-80"
+              style={{ borderColor: 'var(--color-secondary)', color: 'var(--color-secondary)' }}
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+      </div>
+    </motion.a>
   );
 };
 

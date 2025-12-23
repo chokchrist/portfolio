@@ -5,6 +5,7 @@ const CustomCursor = () => {
   const cursorRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
   const [hoverText, setHoverText] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
 
   // Use MotionValues for smooth/performant animation
   const mouseX = useMotionValue(-100);
@@ -16,6 +17,13 @@ const CustomCursor = () => {
   const smoothY = useSpring(mouseY, springConfig);
 
   useEffect(() => {
+    // Only show custom cursor if fine pointer is available (mouse)
+    const mediaQuery = window.matchMedia("(pointer: fine)");
+    setIsVisible(mediaQuery.matches);
+
+    const handleMediaChange = (e) => setIsVisible(e.matches);
+    mediaQuery.addEventListener("change", handleMediaChange);
+
     const moveCursor = (e) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
@@ -41,8 +49,11 @@ const CustomCursor = () => {
     return () => {
       window.removeEventListener('mousemove', moveCursor);
       window.removeEventListener('mouseover', handleMouseOver);
+      mediaQuery.removeEventListener("change", handleMediaChange);
     };
   }, [mouseX, mouseY]);
+
+  if (!isVisible) return null;
 
   return (
     <>

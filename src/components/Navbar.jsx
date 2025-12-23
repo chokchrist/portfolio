@@ -6,22 +6,46 @@ import Magnetic from './Magnetic';
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showText, setShowText] = useState(false);
+  const [activeSection, setActiveSection] = useState('');
   const { scrollY } = useScroll();
 
   useEffect(() => {
+    const handleScroll = () => {
+      const sections = ['work', 'about', 'contact'];
+      const scrollPosition = window.scrollY + window.innerHeight / 3;
+
+      for (const section of sections) {
+        const element = document.getElementById(section);
+        if (element) {
+          const { offsetTop, offsetHeight } = element;
+          if (
+            scrollPosition >= offsetTop &&
+            scrollPosition < offsetTop + offsetHeight
+          ) {
+            setActiveSection(section);
+            break;
+          }
+        }
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
     const unsubscribe = scrollY.on('change', (latest) => {
       // Show text when scrolled past hero section (roughly viewport height)
       const heroHeight = window.innerHeight;
       setShowText(latest > heroHeight * 0.8);
     });
 
-    return () => unsubscribe();
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      unsubscribe();
+    };
   }, [scrollY]);
 
   const menuItems = [
-    { name: 'Work', href: '#work' },
-    { name: 'About', href: '#about' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Work', href: '#work', id: 'work' },
+    { name: 'About', href: '#about', id: 'about' },
+    { name: 'Contact', href: '#contact', id: 'contact' },
   ];
 
   const name = "CHRIST";
@@ -34,8 +58,9 @@ const Navbar = () => {
         className="fixed top-0 left-0 right-0 flex border-b items-end justify-between mx-3 mt-3 pb-1 z-30 origin-left md:mx-5"
         style={{ borderColor: 'var(--color-secondary)' }}
       >
-        <a
+        <motion.a
           href="/"
+          whileTap={{ scale: 0.95 }}
           className="relative overflow-hidden px-1 rounded-none font-extrabold text-xl tracking-tight transition-all duration-300 bg-[var(--color-primary)] text-[var(--color-surface)]"
         >
           <div className="flex">
@@ -58,7 +83,7 @@ const Navbar = () => {
               </motion.span>
             ))}
           </div>
-        </a>
+        </motion.a>
 
         {/* Date Display */}
         <div className="gap-10 text-sm font-medium overflow-hidden hidden md:flex">
@@ -77,7 +102,8 @@ const Navbar = () => {
         <div className="text-lg font-medium leading-5 pointer-events-auto overflow-hidden flex items-center" style={{ color: 'var(--color-primary)' }}>
           <span className="italic">(&nbsp;&nbsp;</span>
           <Magnetic strength={0.3}>
-            <button
+            <motion.button
+              whileTap={{ scale: 0.95 }}
               onClick={() => setIsMenuOpen(true)}
               className="cursor-pointer relative text-lg font-medium overflow-hidden group"
             >
@@ -110,7 +136,7 @@ const Navbar = () => {
                   </span>
                 ))}
               </span>
-            </button>
+            </motion.button>
           </Magnetic>
           <span className="italic">&nbsp;)</span>
         </div>
@@ -127,12 +153,13 @@ const Navbar = () => {
             className="fixed inset-0 bg-black z-50 flex flex-col items-center justify-center"
           >
             {/* Close Button */}
-            <button
+            <motion.button
+              whileTap={{ scale: 0.95 }}
               onClick={() => setIsMenuOpen(false)}
               className="absolute top-6 right-4 md:right-12 text-white hover:opacity-70 transition-opacity"
             >
               <X size={24} />
-            </button>
+            </motion.button>
 
             {/* Menu Items */}
             <div className="flex flex-col items-center gap-8">
@@ -143,8 +170,10 @@ const Navbar = () => {
                   onClick={() => setIsMenuOpen(false)}
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
+                  whileTap={{ scale: 0.95 }}
                   transition={{ delay: index * 0.1 }}
-                  className="text-white text-5xl md:text-7xl font-bold hover:text-gray-400 transition-colors"
+                  className={`text-5xl md:text-7xl font-bold transition-colors ${activeSection === item.id ? 'text-white' : 'text-gray-500 hover:text-gray-300'
+                    }`}
                 >
                   {item.name}
                 </motion.a>
@@ -153,12 +182,12 @@ const Navbar = () => {
 
             {/* Social Links */}
             <div className="absolute bottom-12 flex gap-8 text-sm text-gray-400">
-              <a href="https://github.com/chokchrist" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              <motion.a whileTap={{ scale: 0.95 }} href="https://github.com/chokchrist" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                 GitHub
-              </a>
-              <a href="https://www.linkedin.com/in/christ-jimenez/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              </motion.a>
+              <motion.a whileTap={{ scale: 0.95 }} href="https://www.linkedin.com/in/christ-jimenez/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
                 LinkedIn
-              </a>
+              </motion.a>
             </div>
           </motion.div>
         )}
