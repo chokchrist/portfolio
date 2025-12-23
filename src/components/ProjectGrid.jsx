@@ -14,7 +14,7 @@ const projects = [
     title: "NovaBook",
     category: "SaaS & Business Management",
     image: "/projects/NovaBook.png",
-    link: "https://nova-book.vercel.com/", 
+    link: "https://nova-book.vercel.app/", 
   },
 ];
 
