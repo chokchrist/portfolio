@@ -7,7 +7,14 @@ const projects = [
     title: "AI-Powered Resume Builder",
     category: "AI & Development",
     image: "/projects/CV_Generator.png",
-    link: "https://resumecraft-ai-yu36.onrender.com/", // Placeholder link
+    link: "https://resumecraft-ai-yu36.onrender.com/",
+  },
+  {
+    id: 2,
+    title: "NovaBook",
+    category: "SaaS & Business Management",
+    image: "/projects/NovaBook.png",
+    link: "https://nova-book.vercel.com/", 
   },
 ];
 
