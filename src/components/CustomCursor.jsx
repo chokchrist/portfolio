@@ -4,6 +4,7 @@ import { motion, useSpring, useMotionValue } from 'framer-motion';
 const CustomCursor = () => {
   const cursorRef = useRef(null);
   const [isHovering, setIsHovering] = useState(false);
+  const [hoverText, setHoverText] = useState("");
 
   // Use MotionValues for smooth/performant animation
   const mouseX = useMotionValue(-100);
@@ -21,11 +22,16 @@ const CustomCursor = () => {
     };
 
     const handleMouseOver = (e) => {
-      // Check if hovering over clickable elements
       const target = e.target;
       const isClickable = target.closest('a, button, [role="button"], input, textarea, .cursor-pointer');
 
       setIsHovering(!!isClickable);
+
+      if (isClickable && isClickable.dataset.hover) {
+        setHoverText(isClickable.dataset.hover);
+      } else {
+        setHoverText("");
+      }
     };
 
     // Add event listeners window-wide
@@ -76,7 +82,18 @@ const CustomCursor = () => {
           backgroundColor: { duration: 0.2 },
           borderWidth: { duration: 0.2 }
         }}
-      />
+      >
+        {isHovering && hoverText && (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="text-[10px] uppercase tracking-widest text-white font-medium"
+          >
+            {hoverText}
+          </motion.span>
+        )}
+      </motion.div>
     </>
   );
 };

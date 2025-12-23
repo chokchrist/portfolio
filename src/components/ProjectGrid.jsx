@@ -8,13 +8,15 @@ const projects = [
     category: "AI & Development",
     image: "/projects/CV_Generator.png",
     link: "https://resumecraft-ai-yu36.onrender.com/",
+    techStack: ["React", "Cohere API", "Tailwind", "PDF Generation"],
   },
   {
     id: 2,
     title: "NovaBook",
     category: "SaaS & Business Management",
     image: "/projects/NovaBook.png",
-    link: "https://nova-book.vercel.app/", 
+    link: "https://nova-book.vercel.app/",
+    techStack: ["Next.js", "Supabase", "Prisma", "Stripe"],
   },
 ];
 
@@ -58,7 +60,18 @@ const ProjectGrid = () => {
               </div>
               <div>
                 <h4 className="text-2xl font-medium transition-colors" style={{ color: 'var(--color-primary)' }}>{project.title}</h4>
-                <p className="text-sm mt-1" style={{ color: 'var(--color-secondary)' }}>{project.category}</p>
+                <p className="text-sm mt-1 mb-3" style={{ color: 'var(--color-secondary)' }}>{project.category}</p>
+                <div className="flex flex-wrap gap-2">
+                  {project.techStack.map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-2 py-0.5 rounded-full border text-xs opacity-80"
+                      style={{ borderColor: 'var(--color-secondary)', color: 'var(--color-secondary)' }}
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
               </div>
             </motion.a>
           ))}

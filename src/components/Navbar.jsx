@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll } from 'framer-motion';
 import { X } from 'lucide-react';
+import Magnetic from './Magnetic';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -75,40 +76,42 @@ const Navbar = () => {
         {/* Menu Button with Animation */}
         <div className="text-lg font-medium leading-5 pointer-events-auto overflow-hidden flex items-center" style={{ color: 'var(--color-primary)' }}>
           <span className="italic">(&nbsp;&nbsp;</span>
-          <button
-            onClick={() => setIsMenuOpen(true)}
-            className="cursor-pointer relative text-lg font-medium overflow-hidden group"
-          >
-            {/* First span - visible by default, slides up on hover */}
-            <span className="inline-block overflow-visible">
-              {'Menu'.split('').map((letter, index) => (
-                <span
-                  key={`top-${index}`}
-                  className="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-full"
-                  style={{
-                    transitionDelay: `${index * 30}ms`,
-                  }}
-                >
-                  {letter}
-                </span>
-              ))}
-            </span>
+          <Magnetic strength={0.3}>
+            <button
+              onClick={() => setIsMenuOpen(true)}
+              className="cursor-pointer relative text-lg font-medium overflow-hidden group"
+            >
+              {/* First span - visible by default, slides up on hover */}
+              <span className="inline-block overflow-visible">
+                {'Menu'.split('').map((letter, index) => (
+                  <span
+                    key={`top-${index}`}
+                    className="inline-block transition-transform duration-300 ease-out group-hover:-translate-y-full"
+                    style={{
+                      transitionDelay: `${index * 30}ms`,
+                    }}
+                  >
+                    {letter}
+                  </span>
+                ))}
+              </span>
 
-            {/* Second span - starts below, slides up on hover */}
-            <span className="absolute top-0 left-0 inline-block">
-              {'Menu'.split('').map((letter, index) => (
-                <span
-                  key={`bottom-${index}`}
-                  className="inline-block transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0"
-                  style={{
-                    transitionDelay: `${index * 30}ms`,
-                  }}
-                >
-                  {letter}
-                </span>
-              ))}
-            </span>
-          </button>
+              {/* Second span - starts below, slides up on hover */}
+              <span className="absolute top-0 left-0 inline-block">
+                {'Menu'.split('').map((letter, index) => (
+                  <span
+                    key={`bottom-${index}`}
+                    className="inline-block transition-transform duration-300 ease-out translate-y-full group-hover:translate-y-0"
+                    style={{
+                      transitionDelay: `${index * 30}ms`,
+                    }}
+                  >
+                    {letter}
+                  </span>
+                ))}
+              </span>
+            </button>
+          </Magnetic>
           <span className="italic">&nbsp;)</span>
         </div>
       </nav>
